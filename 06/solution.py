@@ -32,12 +32,37 @@ with open(filename, 'r') as f:
         for row in rows:
             col = col + row[i]
         cols.append(col)
+cols.append('     ')
+batch = []
+multiply = False
 
-print(cols[0])
-print(cols[1])
-print(cols[2])
-print(cols[3])
-print(cols[4])
+for i in range(len(cols)):
+    if cols[i][-1] == '*':
+        batch.append(int(cols[i][:-1]))
+        multiply = True
+
+    elif cols[i][-1] == '+':
+        batch.append(int(cols[i][:-1]))
+        multiply = False
+
+    elif cols[i] == '     ':
+        if multiply:
+            temp_total = 1
+            for num in batch:
+                temp_total *= num
+            sum_tot2 += temp_total
+            batch = []
+        else:
+            temp_total = 0
+            for num in batch:
+                temp_total += num
+            sum_tot2 += temp_total
+            batch = []
+    else:
+        batch.append(int(cols[i]))
+
+
+print(sum_tot2)
 
 # print(cols[0])
 # print(cols[1])
